@@ -1,6 +1,6 @@
 # This project was initiate with [Create React App](https://github.com/facebook/create-react-app).
 
-## Get the Repo by git clone
+## Get the Repository by git clone
 
 `git clone https://github.com/narayoga/frontend-mockuptest.git`
 
