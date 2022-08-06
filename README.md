@@ -8,6 +8,13 @@
 
 `npm install`
 
+there are such an additional library including:
+- axios
+- bootstrap
+- react-bootstrap
+- react-bootstrap-icon
+- react-router-dom
+
 ## Run Scripts
 
 `npm start`
