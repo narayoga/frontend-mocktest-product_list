@@ -24,6 +24,10 @@ img{
   width: 300px;
 }
 
+.change{
+  cursor: pointer;
+}
+
 /* dashboard */
 .card{
   width: 15em;

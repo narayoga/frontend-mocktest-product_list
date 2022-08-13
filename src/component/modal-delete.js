@@ -8,13 +8,31 @@ function MyVerticallyCenteredModal(props) {
   const deleteItem= () => {
     const config = {headers: {Authorization: `Bearer ${token}`}}
     let url = `https://test-binar.herokuapp.com/v1/products/${props.id}`;
-    axios.delete(url, config)
-        .then(res => {
-            console.log('deleted', res)
-        })
-        .catch(err => {
-            console.log( err.message)
-        })
+    const myInit = {
+      method: 'DELETE',
+      mode: 'no-cors',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Access-Control-Allow-Origin': '*',
+      }
+    };
+    axios(url, {
+      method: 'DELETE',
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin': url,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      withCredentials: true,
+      credentials: 'same-origin',
+    })
+    .then(res => {
+        console.log('deleted', res)
+    })
+    .catch(err => {
+        console.log( 'deleted', err)
+    })
   }
 
   return (
@@ -59,3 +77,15 @@ function Delete(props) {
 }
 
 export default Delete;
+
+// axios(url, {
+//   method: 'DELETE',
+//   mode: 'no-cors',
+//   headers: {
+//     'Access-Control-Allow-Origin': url,
+//     'Content-Type': 'application/json',
+//     'Authorization': `Bearer ${token}`
+//   },
+//   withCredentials: true,
+//   credentials: 'same-origin',
+// })

@@ -1,21 +1,26 @@
 import { Fragment, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Edit from '../component/modal-edit'
-import Delete from '../component/modal-delete'
-import Add from '../component/modal-add'
+import Add from "../component/modal-add"
+import Posts from "../component/post";
+import Group from "../component/post-group";
 
 export default function Home() {
     const navigate = useNavigate()
     const token = localStorage.getItem('token')
-    const [items, setItems] = useState([])
+    const [posts, setPosts] = useState([])
+    const [loading, setLoading]= useState(false)
+    const [currentPage, setCurrentPage ] = useState(1)
+    const [postsPerPage, setPostsPerPage ] = useState(10)
 
-    const getItem= () => {
+    const getItem =  async () => {
+        setLoading(true)
         const config = {headers: {Authorization: `Bearer ${token}`}}
         let url = 'https://test-binar.herokuapp.com/v1/products';
-        axios.get(url, config)
+        await axios.get(url, config)
             .then(res => {
-                setItems(res.data.result)
+                setPosts(res.data.result)
+                setLoading(false)
               })
             .catch(err => console.log(err))
     }
@@ -29,6 +34,13 @@ export default function Home() {
         if(!token){
             navigate('/login')
         }
+    }
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
+    const change = (pageNumber)=> {
+        setCurrentPage(pageNumber)
     }
 
     useEffect(() => {
@@ -50,27 +62,13 @@ export default function Home() {
                 </div>
             </div>
             
-            <div class="container">
-                <div class="row">
-                    {items.map((item) => {
-                        return(
-                            <div key={item.id} class="col">
-                                <div className="card">
-                                    <img src={item.imageurl} className="card-img-top" alt="..." />
-                                    <div>
-                                        <p style={{marginBottom:"0px"}} >{item.name}</p>
-                                        <p >{item.price}$</p>
-                                        <div className='icon-group d-flex'>
-                                            <div className='me-1'><Edit data={item.id}  /></div>
-                                            <div className='ms-1'><Delete data={item} /></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })}
-                    
-                </div>
+            <div className="container">
+                <Posts posts={currentPosts} loading={loading} />
+                <Group 
+                    postsPerPage={postsPerPage} 
+                    totalPosts={posts.length} 
+                    change={change}
+                />
             </div>
         </>
         
