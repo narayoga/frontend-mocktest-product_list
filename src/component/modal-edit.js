@@ -11,7 +11,7 @@ function MyVerticallyCenteredModal(props) {
 
   const getItem= () => {
     const config = {headers: {Authorization: `Bearer ${token}`}}
-    let url = `https://test-binar.herokuapp.com/v1/products/${props.id}`;
+    let url = `/${props.id}`;
     axios.get(url, config)
         .then(res => {
             const att = res.data.result
@@ -32,10 +32,11 @@ function MyVerticallyCenteredModal(props) {
       imageurl: src
     }
     const config = {headers: {Authorization: `Bearer ${token}`}}
-    let url = `https://test-binar.herokuapp.com/v1/products/${props.id}`
+    let url = `/${props.id}`
     axios.put(url, bodyUpdate, config)
       .then(res => {
         console.log('success')
+        window.location.reload()
       })
       .catch(err => {
         console.log(err)

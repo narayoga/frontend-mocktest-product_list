@@ -11,7 +11,7 @@ const Posts = ({posts, loading}) => {
         <div className="row">
             {posts.map((item) => {
                 return(
-                    <div key={item.id} class="col">
+                    <div key={item.id} className="col">
                         <div className="card">
                             <img src={item.imageurl} className="card-img-top" alt="..." />
                             <div>

@@ -7,31 +7,15 @@ function MyVerticallyCenteredModal(props) {
   const token = localStorage.getItem('token')
   const deleteItem= () => {
     const config = {headers: {Authorization: `Bearer ${token}`}}
-    let url = `https://test-binar.herokuapp.com/v1/products/${props.id}`;
-    const myInit = {
-      method: 'DELETE',
-      mode: 'no-cors',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Access-Control-Allow-Origin': '*',
-      }
-    };
-    axios(url, {
-      method: 'DELETE',
-      mode: 'no-cors',
-      headers: {
-        'Access-Control-Allow-Origin': url,
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      withCredentials: true,
-      credentials: 'same-origin',
-    })
+    let url = `/${props.id}`;
+    axios.delete(url, config)
     .then(res => {
         console.log('deleted', res)
+        window.location.reload()
     })
     .catch(err => {
         console.log( 'deleted', err)
+        window.location.reload()
     })
   }
 
